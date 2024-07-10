@@ -24,7 +24,7 @@ export default function ServiceProviderForm() {
             serviceType : form.serviceType,
             // name : form.categories.name,
             // amount : form.categories.amount,
-            categories:[{name:form.categories[0].name , amount:Number(form.categories[1].amount)}],
+            categories:form.categories,
             socialLinks : form.socialLinks,
             location : form.location
         }
@@ -103,7 +103,7 @@ export default function ServiceProviderForm() {
         const categoryObj = {
             tempId: Number(new Date()),
             name: form.name, 
-            amount: form.amount 
+            amount: Number(form.amount) 
         }
         setForm({...form, categories: [...form.categories, categoryObj], name: '', amount: ''})
     };
@@ -123,7 +123,8 @@ export default function ServiceProviderForm() {
         console.log(name, value, id)
         setForm({...form, categories: form.categories.map((ele) => {
             if(ele.tempId === id) {
-                return {...ele, [name]: value}
+                return {...ele, [name]: value
+                }
             } else {
                 return {...ele}
             }
@@ -164,7 +165,7 @@ export default function ServiceProviderForm() {
                                 return <option value={ele.value}>{ ele.label }</option>
                             })}
                         </select>
-                        <input type="text" value={category.amount} onChange={handleSelectedCategoryChange} name="amount" id={category.tempId} />
+                        <input type="number" value={category.amount} onChange={handleSelectedCategoryChange} name="amount" id={category.tempId} />
                         <button onClick={() => {
                             handleRemoveCategory(category.tempId )
                         }} >remove</button>
@@ -202,6 +203,8 @@ export default function ServiceProviderForm() {
                 </select>
                 <input type="text" value={form.amount} onChange={(e) => { setForm({...form, amount: e.target.value }) }} /> 
                 <button type="button" onClick={addCategory}>Add Category</button>
+                <br/>
+                
                 <label htmlFor="socialLinks">Social media links</label><br />
                 <input
                     type="text"

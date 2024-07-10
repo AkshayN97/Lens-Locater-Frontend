@@ -47,12 +47,20 @@ export default function LoginForm(){
                     }
                 })
                 if (account.data.role === 'serviceProvider') {
-                    console.log(response.data)
-                    handleLogin(account.data);
-                    navigate('/serviceProvider');
+                //     const serviceProvider = axios.get
+                // console.log(response.data);
+                console.log(account.data)
+                handleLogin(account.data);
+                if (account.data.serviceProvider) {
+                    navigate('/serviceProviderProfile');
                 } else {
-                    navigate('/')
+                    navigate('/serviceProvider');
                 }
+            } else if (account.data.role === 'customer') {
+                console.log(response.data);
+                handleLogin(account.data);
+                navigate('/customerPage');
+            }
             } catch(err){
                 console.log(err)
             }
